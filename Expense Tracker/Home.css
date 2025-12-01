@@ -1,0 +1,39 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.parent{
+    width:100%;
+    border:1px solid black;
+    height: 100vh;
+  
+}
+.solid-circle{
+    width:1000px;
+    height:1200px;
+     border-radius: 50%;
+     overflow: hidden;
+      background-color: blueviolet;
+       position: absolute;
+    top: -200px;
+    right:-500px;
+    
+
+} 
+
+.header-home{
+   
+    border: 1px solid black;
+    display: flex;
+    
+   position: relative;
+}
+.click-here-button{
+background-color:white ; 
+color: blueviolet;
+z-index: 2  ;
+position: absolute;
+
+
+}
