@@ -1,0 +1,450 @@
+{
+	"info": {
+		"_postman_id": "47b89e42-a5a6-4b57-8d68-442ef6d5c8cc",
+		"name": "Prod-testing",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "41698633",
+		"_collection_link": "https://bitlabs-4237.postman.co/workspace/Team-Workspace~cf93c878-e2ba-42ce-8ad1-0b1bbc994eff/collection/41698633-47b89e42-a5a6-4b57-8d68-442ef6d5c8cc?action=share&source=collection_link&creator=41698633"
+	},
+	"item": [
+		{
+			"name": "ApplicantCard",
+			"item": [
+				{
+					"name": "ACard",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzaGFubXVraGFnYW5lc2hyZXBha2FAZ21haWwuY29tIiwiZXhwIjoxNzY0OTUxNjk3LCJpYXQiOjE3NjQ5MTU2OTd9.QsLd3aYaMHA1JsBmbvpxjFQn1LghraYSaMk27kbROp8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/applicant-card/17451/getApplciantCard",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"applicant-card",
+								"17451",
+								"getApplciantCard"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ACrad Update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzaGFubXVraGFnYW5lc2hyZXBha2FAZ21haWwuY29tIiwiZXhwIjoxNzY0OTUxNjk3LCJpYXQiOjE3NjQ5MTU2OTd9.QsLd3aYaMHA1JsBmbvpxjFQn1LghraYSaMk27kbROp8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"applicantName\": \"John Doe\",\r\n  \"email\": \"john.doe@gmail.com\",\r\n  \"phone\": \"9876543210\",\r\n  \"profileSummary\": \"Full stack developer with 4 years experience.\",\r\n  \"skills\": [\"Java\", \"Spring Boot\", \"React\"],\r\n  \"experienceYears\": 4,\r\n  \"currentCompany\": \"Infosys\",\r\n  \"designation\": \"Software Engineer\",\r\n  \"location\": \"Bangalore\",\r\n  \"expectedSalary\": 650000\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/applicant-card/17451/updateApplciantCard",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"applicant-card",
+								"17451",
+								"updateApplciantCard"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Apersonal",
+			"item": [
+				{
+					"name": "Apersonal",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzaGFubXVraGFnYW5lc2hyZXBha2FAZ21haWwuY29tIiwiZXhwIjoxNzY0OTUxNjk3LCJpYXQiOjE3NjQ5MTU2OTd9.QsLd3aYaMHA1JsBmbvpxjFQn1LghraYSaMk27kbROp8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"applicantName\": \"John Doe\",\r\n  \"email\": \"john.doe@gmail.com\",\r\n  \"phone\": \"9876543210\",\r\n  \"profileSummary\": \"Full stack developer with 4 years experience.\",\r\n  \"skills\": [\"Java\", \"Spring Boot\", \"React\"],\r\n  \"experienceYears\": 4,\r\n  \"currentCompany\": \"Infosys\",\r\n  \"designation\": \"Software Engineer\",\r\n  \"location\": \"Bangalore\",\r\n  \"expectedSalary\": 650000\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8081/applicant-personal/17451/getApplicantPersonalDetails",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"applicant-personal",
+								"17451",
+								"getApplicantPersonalDetails"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ApersonlaUpdate",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzaGFubXVraGFnYW5lc2hyZXBha2FAZ21haWwuY29tIiwiZXhwIjoxNzY0OTUxNjk3LCJpYXQiOjE3NjQ5MTU2OTd9.QsLd3aYaMHA1JsBmbvpxjFQn1LghraYSaMk27kbROp8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"applicantName\": \"John Doe\",\r\n  \"email\": \"john.doe@gmail.com\",\r\n  \"phone\": \"9876543210\",\r\n  \"profileSummary\": \"Full stack developer with 4 years experience.\",\r\n  \"skills\": [\"Java\", \"Spring Boot\", \"React\"],\r\n  \"experienceYears\": 4,\r\n  \"currentCompany\": \"Infosys\",\r\n  \"designation\": \"Software Engineer\",\r\n  \"location\": \"Bangalore\",\r\n  \"expectedSalary\": 650000\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8081/applicant-personal/17451/updateApplicantPersonalDetails",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"applicant-personal",
+								"17451",
+								"updateApplicantPersonalDetails"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ASummary",
+			"item": [
+				{
+					"name": "getSummary",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzaGFubXVraGFnYW5lc2hyZXBha2FAZ21haWwuY29tIiwiZXhwIjoxNzY0OTUxNjk3LCJpYXQiOjE3NjQ5MTU2OTd9.QsLd3aYaMHA1JsBmbvpxjFQn1LghraYSaMk27kbROp8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"applicantName\": \"John Doe\",\r\n  \"email\": \"john.doe@gmail.com\",\r\n  \"phone\": \"9876543210\",\r\n  \"profileSummary\": \"Full stack developer with 4 years experience.\",\r\n  \"skills\": [\"Java\", \"Spring Boot\", \"React\"],\r\n  \"experienceYears\": 4,\r\n  \"currentCompany\": \"Infosys\",\r\n  \"designation\": \"Software Engineer\",\r\n  \"location\": \"Bangalore\",\r\n  \"expectedSalary\": 650000\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8081/applicant-summary/17452/getApplicantSummary",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"applicant-summary",
+								"17452",
+								"getApplicantSummary"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateSummary",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzaGFubXVraGFnYW5lc2hyZXBha2FAZ21haWwuY29tIiwiZXhwIjoxNzY0OTUxNjk3LCJpYXQiOjE3NjQ5MTU2OTd9.QsLd3aYaMHA1JsBmbvpxjFQn1LghraYSaMk27kbROp8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"applicantName\": \"John Doe\",\r\n  \"email\": \"john.doe@gmail.com\",\r\n  \"phone\": \"9876543210\",\r\n  \"profileSummary\": \"Full stack developer with 4 years experience.\",\r\n  \"skills\": [\"Java\", \"Spring Boot\", \"React\"],\r\n  \"experienceYears\": 4,\r\n  \"currentCompany\": \"Infosys\",\r\n  \"designation\": \"Software Engineer\",\r\n  \"location\": \"Bangalore\",\r\n  \"expectedSalary\": 650000\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8081/applicant-summary/17452/up[dateApplicantSummary",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"applicant-summary",
+								"17452",
+								"up[dateApplicantSummary"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "AProjects",
+			"item": [
+				{
+					"name": "getProjects",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzaGFubXVraGFnYW5lc2hyZXBha2FAZ21haWwuY29tIiwiZXhwIjoxNzY0OTYwODM3LCJpYXQiOjE3NjQ5MjQ4Mzd9.MUfXZH8fwpQqCkP15mv1gHGK27BqU_IzVWjd7hFvZ_0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/applicant-projects/17451/getApplicantProjects",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"applicant-projects",
+								"17451",
+								"getApplicantProjects"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update Project",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzaGFubXVraGFnYW5lc2hyZXBha2FAZ21haWwuY29tIiwiZXhwIjoxNzY0OTYwODM3LCJpYXQiOjE3NjQ5MjQ4Mzd9.MUfXZH8fwpQqCkP15mv1gHGK27BqU_IzVWjd7hFvZ_0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"projectTitle\": \"Online Job Portal System\",\r\n  \"specialization\": \"Full Stack Web Development\",\r\n  \"technologiesUsed\": \"Java, Spring Boot, React, MySQL\",\r\n  \"teamSize\": 5,\r\n   \"roleInProject\": \"Backend Developer\",\r\n  \"roleDescription\": \"Designed and developed REST APIs, implemented authentication and authorization, and maintained database schema.\",\r\n  \"projectDescription\": \"The system enables applicants and recruiters to interact on a single platform. It supports job posting, resume shortlisting, online test features, and status tracking. The system improves recruitment efficiency through automation.\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/applicant-projects/17451/saveApplicantProject",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"applicant-projects",
+								"17451",
+								"saveApplicantProject"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "shanmukhaganeshrepaka@gmail.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"shanmukhaganeshrepaka@gmail.com\",\r\n    \"password\":\"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/applicant/applicantLogin",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"applicant",
+								"applicantLogin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getCurrentProjects",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Education",
+			"item": [
+				{
+					"name": "getEducation",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzaGFubXVraGFnYW5lc2hyZXBha2FAZ21haWwuY29tIiwiZXhwIjoxNzY0OTYwODM3LCJpYXQiOjE3NjQ5MjQ4Mzd9.MUfXZH8fwpQqCkP15mv1gHGK27BqU_IzVWjd7hFvZ_0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/applicant-education/17451/getApplciantEducationDetails",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"applicant-education",
+								"17451",
+								"getApplciantEducationDetails"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateEducation",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzaGFubXVraGFnYW5lc2hyZXBha2FAZ21haWwuY29tIiwiZXhwIjoxNzY0OTYwODM3LCJpYXQiOjE3NjQ5MjQ4Mzd9.MUfXZH8fwpQqCkP15mv1gHGK27BqU_IzVWjd7hFvZ_0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"gradDegree\": \"Bachelor of Technology\",\r\n  \"gradUniversity\": \"Anna University\",\r\n  \"gradSpecialization\": \"Computer Science Engineering\",\r\n  \"gradCourseType\": \"Full-time\",\r\n  \"gradStartYear\": 2018,\r\n  \"gradEndYear\": 2022,\r\n  \"gradMarksPercent\": 76.5,\r\n  \r\n  \"xiiBoard\": \"CBSE\",\r\n  \"xiiPassingYear\": 2018,\r\n  \"xiiMarksPercent\": 88.2,\r\n\r\n  \"xBoard\": \"State Board\",\r\n  \"xPassingYear\": 2016,\r\n  \"xMarksPercent\": 92.1\r\n}\r\n"
+						},
+						"url": {
+							"raw": "http://localhost:8081/applicant-education/17451/updateApplciantEducationDetails",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"applicant-education",
+								"17451",
+								"updateApplciantEducationDetails"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
