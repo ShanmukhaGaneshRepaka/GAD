@@ -14,7 +14,7 @@ const SUMMARY_API = `${apiUrl}/applicant-summary`;
 const HELP_TEXT =
   "Try adding a resume summary — it helps employers quickly understand your strengths, tech stack, and professional goals.";
 
-const ResumeSummaryCard = ({ applicantId }) => {
+const ResumeSummaryCard = ({ applicantId,onChange}) => {
   const [summary, setSummary] = useState("");
   const [open, setOpen] = useState(false);
   const [snackbars, setSnackbars] = useState([]);
@@ -40,6 +40,10 @@ const ResumeSummaryCard = ({ applicantId }) => {
     if (applicantId) fetchSummary();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [applicantId]);
+
+    useEffect(() => {
+    onChange?.(summary);
+  }, [summary, onChange]);
 
   const displayText =
     summary && summary.length > 0 ? summary : HELP_TEXT;

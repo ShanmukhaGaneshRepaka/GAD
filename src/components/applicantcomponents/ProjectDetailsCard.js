@@ -50,7 +50,7 @@ const Pills = ({ items }) => {
   );
 };
 
-const ProjectDetailsCard = ({ applicantId }) => {
+const ProjectDetailsCard = ({ applicantId,onChange }) => {
   const [items, setItems] = useState([]);
   const [editOpen, setEditOpen] = useState(false);
   const [snackbars, setSnackbars] = useState([]);
@@ -131,7 +131,9 @@ const ProjectDetailsCard = ({ applicantId }) => {
     }
   };
 
-
+  useEffect(() => {
+    onChange?.(items);
+  }, [items, onChange]);
 
   return (
     <>

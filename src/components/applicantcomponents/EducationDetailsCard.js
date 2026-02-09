@@ -30,7 +30,7 @@ const Section = ({ title, children, open, onToggle }) => (
   </div>
 );
 
-const EducationDetailsCard = ({ applicantId }) => {
+const EducationDetailsCard = ({ applicantId, onChange}) => {
   const [data, setData] = useState(null);
   const [openGrad, setOpenGrad] = useState(true);
   const [openXII, setOpenXII] = useState(true);
@@ -63,6 +63,13 @@ const EducationDetailsCard = ({ applicantId }) => {
     if (applicantId) fetchEducation();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [applicantId]);
+  
+// 🔥 ADD THIS EXACT BLOCK
+useEffect(() => {
+  if (data) {
+    onChange?.(data);
+  }
+}, [data]);
 
   const g = useMemo(() => data?.graduation || {}, [data]);
   const xii = useMemo(() => data?.classXii || {}, [data]);

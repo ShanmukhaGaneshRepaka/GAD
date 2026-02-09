@@ -222,7 +222,7 @@ const UploadImageComponent = ({ id, onSuccess, onClose }) => {
   );
 };
 
-const ApplicantHeaderComponent = ({ applicantId }) => {
+const ApplicantHeaderComponent = ({ applicantId ,onChange}) => {
   const [card, setCard] = useState(DEFAULT_CARD);
   const [editOpen, setEditOpen] = useState(false);
   const [imageModalOpen, setImageModalOpen] = useState(false);
@@ -366,7 +366,10 @@ const ApplicantHeaderComponent = ({ applicantId }) => {
     }
   };
 
-
+useEffect(()=>{
+  onChange?.(card);
+  // fetchCard();
+},[card]);
 
   const fetchPhoto = async () => {
     try {

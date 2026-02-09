@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const SKILLS_API = (id) => `${apiUrl}/applicantprofile/${id}/skills`;
 
-const KeySkillsCard = ({ applicantId }) => {
+const KeySkillsCard = ({ applicantId,onChange }) => {
   const [skills, setSkills] = useState([]);
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -33,6 +33,12 @@ const KeySkillsCard = ({ applicantId }) => {
     if (applicantId) fetchSkills();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [applicantId]);
+
+ useEffect(() => {
+  if (skills.length > 0) {
+    onChange?.(skills);
+  }
+}, [skills, onChange]);
 
   return (
     <div className="card-base soft-shadow card-skills common_style" style={{ overflow: "hidden" }}>

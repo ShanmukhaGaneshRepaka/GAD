@@ -14,7 +14,7 @@ import analytics from "../../utils/analytics";
 const PERSONAL_API = `${apiUrl}/applicant-personal`;
 const RESUME_API = `${apiUrl}/applicant-pdf`;
 
-const PersonalDetailsCard = ({ applicantId }) => {
+const PersonalDetailsCard = ({ applicantId,onChange }) => {
   const [bd, setBd] = useState(null);
   const [open, setOpen] = useState(false);
   const [snackbars, setSnackbars] = useState([]);
@@ -131,7 +131,12 @@ const PersonalDetailsCard = ({ applicantId }) => {
       addSnackbar({ message: "Unable to open resume.", type: "error" });
     }
   };
-
+// 🔥 ADD THIS EXACT BLOCK
+useEffect(() => {
+  if (bd) {
+    onChange?.(bd);
+  }
+}, [bd]);
 
   return (
     <>
