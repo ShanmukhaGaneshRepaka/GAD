@@ -772,59 +772,7 @@ const ApplicantDashboard = () => {
                         Explore
                       </span>
                     </div>
-                    <div className="profile-side-section">
-                      <div>
-                        <img src={imageSrc || '../images/user/avatar/image-01.jpg'} alt="Profile" onError={() => setImageSrc('../images/user/avatar/image-01.jpg')} style={{
-                          borderRadius: "85%",
-                          width: "65px",
-                          height: "65px",
-                          border: "2px solid #EA7B20"
-                        }} />
-                        <span className="badges">
-                          {earnedBadges.map(badge => (
-                            <img
-                              key={badge.name}
-                              src={`./images/dashboard/badge-${badge.name}.png`}
-                              width="15"
-                              height="23"
-                            />
-                          ))}
-                        </span>
-                      </div>
-                      <div className="profile-extra-details">
-                        <span>
-                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                            fill="#EA7B20" stroke-linecap="round"
-                            stroke-linejoin="round">
-                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2
-           19.86 19.86 0 0 1-8.63-3.07
-           19.5 19.5 0 0 1-6-6
-           19.86 19.86 0 0 1-3.07-8.63
-           A2 2 0 0 1 4.11 2h3
-           a2 2 0 0 1 2 1.72c.12 1.06.37 2.09.74 3.06
-           a2 2 0 0 1-.45 2.11L8.09 10.91
-           a16 16 0 0 0 6 6l1.98-1.98
-           a2 2 0 0 1 2.11-.45c.97.37 2 .62 3.06.74
-           A2 2 0 0 1 22 16.92z" />
-                          </svg>
-                          <p>{card?.mobileNumber}</p>
-                        </span>
-                        <span>
-                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                            fill="#EA7B20" stroke="white" stroke-linecap="round"
-                            stroke-linejoin="round">
-                            <rect x="2" y="3" width="20" height="18" rx="2" ry="2"></rect>
-                            <polyline points="22 6 12 13 2 6"></polyline>
-                          </svg>
-                          <p>{profileData?.applicant?.email}</p>
-                        </span>
-                      </div>
-                      <div className="portfolio-score-details">
-                        <h3>score</h3>
-                        <p>{dashboardScore ?? 0}</p>
-                      </div>
-
-                    </div>
+                
                     <h3 style={{ color: 'black', fontWeight: 'bold', margin: 0 }}>
                       {card?.name}
                     </h3>

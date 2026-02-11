@@ -129,6 +129,8 @@ function App() {
                 <Route path="/applicant-blog-list" element={<ApplicantHomePage />} />
                 <Route path="/applicant-mentorconnect" element={<ApplicantHomePage />} />
                 <Route path="/applicant-interview-prep" element={<ApplicantHomePage />} />
+                <Route path="/resume-templates" element={<ApplicantHomePage />} />
+
                 {/* <Route path="/verified-badges" component={VerifiedBadges} /> */}
                 <Route path="/applicant-verified-badges" element={<ApplicantHomePage />} />
                 <Route path="/applicant-resume-builder" element={<ApplicantHomePage />} />
@@ -163,6 +165,7 @@ function App() {
                 <Route path="/recruiter-feedback-forms" element={<RecruiterHomePage />} />
                 <Route path="/recruiter-create-feedback-form" element={<RecruiterHomePage />} />
                 <Route path="/recruiter-edit-feedback-form/:id" element={<RecruiterHomePage />} />
+                <Route path="/resume-templates" element={<ApplicantHomePage />} />
 
               
                 </>

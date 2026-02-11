@@ -223,23 +223,7 @@ export default function ApplicantBlogs() {
             <div className="main-header-row">
               <h1 className="main-heading">Tech vibes</h1>
 
-              <div className="hackathon-search-box">
-                <i className="fa fa-search search-icon1"></i>
-                <input
-                  type="text"
-                  placeholder="Search"
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                  className="hackathon-search-input"
-                />
-                {query && (
-                  <i
-                    className="fa fa-times clear-icon"
-                    onMouseDown={(e) => e.preventDefault()}
-                    onClick={() => setQuery("")}
-                  ></i>
-                )}
-              </div>
+             
             </div>
           </div>
         </div>

@@ -32,6 +32,7 @@ import MyJobs from '../../components/applicantcomponents/MyJobs';
 import InterviewPrepPage from './InterviewPrepPage';
 import FeedbackFormsList from '../../components/applicantcomponents/FeedbackFormsList';
 import FeedbackFormFill from '../../components/applicantcomponents/FeedbackFormFill';
+import ResumeTemplates from '../../components/applicantcomponents/ResumeTemplates';
 
 function ApplicantHomePage() {
   const [activeRoute, setActiveRoute] = useState('');
@@ -127,6 +128,9 @@ function ApplicantHomePage() {
          case '/applicant-hackathon':
         setActiveRoute('hackathon')
         break;
+        case '/resume-templates':
+        setActiveRoute('resume-templates')
+        break;
       case `/applicant-hackathon-details/${id}`:
         setActiveRoute('hackDetails');
         break;
@@ -188,7 +192,7 @@ function ApplicantHomePage() {
      {activeRoute === 'taketest' && <ApplicantTakeTest />}
      {activeRoute === 'badges' && <VerifiedBadges />}
       {activeRoute === 'videos' && <VerifiedVideos />}
-
+      {activeRoute === 'resume-templates' && <ResumeTemplates />}
       {activeRoute === 'hackathon' && <Hackathon />}
       {activeRoute === 'hackDetails' && <HackathonDetails />}
       {activeRoute === 'blogs' && <ApplicantBlogsList />}

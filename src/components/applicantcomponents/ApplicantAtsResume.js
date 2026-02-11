@@ -5,6 +5,7 @@ import JobDescriptionModal from './JobDescriptionModel';
 
 const ApplicantAtsResume = ({ applicantId }) => {
   const [showJD, setShowJD] = useState(false);
+  const[continueButton, setContinueButton] = useState(false);
 
 //   const validateEducation = (education) => {
 //   const errors = {};
@@ -185,7 +186,10 @@ const shimmerAnimation = `
 
       {showJD && (
   <Overlay onClose={() => setShowJD(false)}>
-    <JobDescriptionModal onClose={() => setShowJD(false)} />
+    <JobDescriptionModal onClose={() => setShowJD(false)}
+                          // continueButton={handlecontinueButton}
+                          
+                          />
   </Overlay>
 )}
     </div>
