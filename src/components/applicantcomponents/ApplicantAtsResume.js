@@ -1,87 +1,93 @@
+import Overlay from './Overlay';
+//  import { useState } from 'react';
+import React, { useState } from 'react';
+import JobDescriptionModal from './JobDescriptionModel';
+
 const ApplicantAtsResume = ({ applicantId }) => {
+  const [showJD, setShowJD] = useState(false);
 
-  const validateEducation = (education) => {
-  const errors = {};
+//   const validateEducation = (education) => {
+//   const errors = {};
 
-  // Graduation
-  if (!education?.graduation?.degree)
-    errors.graduationDegree = "Graduation degree is required";
+//   // Graduation
+//   if (!education?.graduation?.degree)
+//     errors.graduationDegree = "Graduation degree is required";
 
-  if (!education?.graduation?.university)
-    errors.graduationUniversity = "University is required";
+//   if (!education?.graduation?.university)
+//     errors.graduationUniversity = "University is required";
 
-  if (!education?.graduation?.startYear)
-    errors.graduationStartYear = "Start year is required";
+//   if (!education?.graduation?.startYear)
+//     errors.graduationStartYear = "Start year is required";
 
-  if (!education?.graduation?.endYear)
-    errors.graduationEndYear = "End year is required";
+//   if (!education?.graduation?.endYear)
+//     errors.graduationEndYear = "End year is required";
 
-  // Class XII
-  if (!education?.classXii?.board)
-    errors.classXiiBoard = "Class XII board is required";
+//   // Class XII
+//   if (!education?.classXii?.board)
+//     errors.classXiiBoard = "Class XII board is required";
 
-  if (!education?.classXii?.passingYear)
-    errors.classXiiPassingYear = "Class XII passing year is required";
+//   if (!education?.classXii?.passingYear)
+//     errors.classXiiPassingYear = "Class XII passing year is required";
 
-  // Class X
-  if (!education?.classX?.board)
-    errors.classXBoard = "Class X board is required";
+//   // Class X
+//   if (!education?.classX?.board)
+//     errors.classXBoard = "Class X board is required";
 
-  if (!education?.classX?.passingYear)
-    errors.classXPassingYear = "Class X passing year is required";
+//   if (!education?.classX?.passingYear)
+//     errors.classXPassingYear = "Class X passing year is required";
 
-  return errors;
-};
+//   return errors;
+// };
 
-const validateSkills = (skills) => {
-  const errors = {};
+// const validateSkills = (skills) => {
+//   const errors = {};
 
-  if (!Array.isArray(skills) || skills.length === 0) {
-    errors.skills = "At least one skill is required";
-    return errors;
-  }
+//   if (!Array.isArray(skills) || skills.length === 0) {
+//     errors.skills = "At least one skill is required";
+//     return errors;
+//   }
 
-  if (skills.length < 3) {
-    errors.skills = "Add at least 3 skills for a strong ATS resume";
-  }
+//   if (skills.length < 3) {
+//     errors.skills = "Add at least 3 skills for a strong ATS resume";
+//   }
 
-  skills.forEach((skill, index) => {
-    if (!skill || skill.trim().length === 0) {
-      errors[`skill_${index}`] = "Skill cannot be empty";
-    }
-  });
+//   skills.forEach((skill, index) => {
+//     if (!skill || skill.trim().length === 0) {
+//       errors[`skill_${index}`] = "Skill cannot be empty";
+//     }
+//   });
 
-  return errors;
-};
+//   return errors;
+// };
 
-const validateProjects = (projects) => {
-  const errors = {};
+// const validateProjects = (projects) => {
+//   const errors = {};
 
-  if (!Array.isArray(projects) || projects.length === 0) {
-    errors.projects = "At least one project is required";
-    return errors;
-  }
+//   if (!Array.isArray(projects) || projects.length === 0) {
+//     errors.projects = "At least one project is required";
+//     return errors;
+//   }
 
-  projects.forEach((project, index) => {
-    if (!project.projectTitle)
-      errors[`projectTitle_${index}`] = "Project title is required";
+//   projects.forEach((project, index) => {
+//     if (!project.projectTitle)
+//       errors[`projectTitle_${index}`] = "Project title is required";
 
-    if (!project.specialization)
-      errors[`projectSpecialization_${index}`] = "Specialization is required";
+//     if (!project.specialization)
+//       errors[`projectSpecialization_${index}`] = "Specialization is required";
 
-    if (!project.technologiesUsed)
-      errors[`projectTechnologies_${index}`] = "Technologies used are required";
+//     if (!project.technologiesUsed)
+//       errors[`projectTechnologies_${index}`] = "Technologies used are required";
 
-    if (!project.roleInProject)
-      errors[`projectRole_${index}`] = "Role in project is required";
+//     if (!project.roleInProject)
+//       errors[`projectRole_${index}`] = "Role in project is required";
 
-    if (!project.projectDescription || project.projectDescription.length < 20)
-      errors[`projectDescription_${index}`] =
-        "Project description must be at least 20 characters";
-  });
+//     if (!project.projectDescription || project.projectDescription.length < 20)
+//       errors[`projectDescription_${index}`] =
+//         "Project description must be at least 20 characters";
+//   });
 
-  return errors;
-};
+//   return errors;
+// };
 
 
 const shimmerAnimation = `
@@ -158,6 +164,8 @@ const shimmerAnimation = `
     e.currentTarget.style.color = '#FFFFFF';
     e.currentTarget.style.border = 'none';
         }}
+
+        onClick={() => setShowJD(true)}
       >
         {/* Shimmer Effect Overlay */}
         <div style={{
@@ -174,7 +182,15 @@ const shimmerAnimation = `
           ✨ Generate ATS Resume
         </span>
       </button>
+
+      {showJD && (
+  <Overlay onClose={() => setShowJD(false)}>
+    <JobDescriptionModal onClose={() => setShowJD(false)} />
+  </Overlay>
+)}
     </div>
+
+    
   );
 };
 
