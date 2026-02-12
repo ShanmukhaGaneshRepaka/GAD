@@ -19,7 +19,7 @@ const ResumeTemplates = () => {
 
   <div className="border-style">
       <div className="blur-border-style"></div>
-      <div className="dashboard__content">
+      <div className="dashboard__content resume-template">
 
 
 
@@ -28,7 +28,7 @@ const ResumeTemplates = () => {
       <h2 className="title">AI Resume Template</h2>
 
       <div className="template-container">
-        {[1, 2, 3, 4,5,6,7,8].map((id) => (
+        {[1, 2, 3, 4].map((id) => (
           <div
             key={id}
             className={`template-card ${

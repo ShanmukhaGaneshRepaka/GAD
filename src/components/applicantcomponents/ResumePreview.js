@@ -1,4 +1,5 @@
 import './ResumePreview.css';
+import ApplicantViewProfile from './ApplicantViewProfile';
 const ResumePreview = () => {
 
 
@@ -16,7 +17,12 @@ const ResumePreview = () => {
                     </div>
 
                 <div className="resume-preview-wrapper">
-
+                      <div className="resume-pdf">
+                         {/* <ApplicantViewProfile/> */}
+                      </div>
+                      <div className="resume-portfolio">
+                        <ApplicantViewProfile/>
+                      </div>
                    
 
                 </div>

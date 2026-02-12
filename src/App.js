@@ -33,6 +33,7 @@ import FeedbackDashboard from "./pages/feedbackpage/FeedbackDashboard";
 import FeedbackResponses from "./pages/feedbackpage/FeedbackResponses";
 import { RefreshProvider } from "./components/common/RefreshContext";
 import ProtectedRoute from './ProtectedRoute';
+import { ResumeProvider } from './components/applicantcomponents/ResumeContext';
 
 
 function App() {
@@ -68,6 +69,7 @@ function App() {
     <div>
       <UserProvider>
          <RefreshProvider>
+        <ResumeProvider>
         {checkingAuth ? (
           <p>Loading...</p>
         ) : (
@@ -178,6 +180,7 @@ function App() {
             </Routes>
           </Router>
         )}
+        </ResumeProvider>
         </RefreshProvider>
       </UserProvider>
       {/* <ChatBotWidget /> */}

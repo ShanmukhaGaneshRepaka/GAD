@@ -12,18 +12,23 @@ import "./Portfolio.css";
 import ApplicantAtsResume from "./ApplicantAtsResume";
 import { useState } from "react";
 import { useEffect } from "react";
+import { useResume } from "./ResumeContext";
 const ApplicantViewProfile = () => {
   const { user } = useUserContext();
   const applicantId = user?.id;
   
   // 🔥 CENTRAL AGGREGATED STATE
-  const [profileData, setProfileData] = useState({
-    resumeSummary: null,
-    personalDetails: null,
-    educationDetails: [],
-    projectDetails: [],
-    keySkills: [],
-  });
+  // const [profileData, setProfileData] = useState({
+  //   resumeSummary: null,
+  //   personalDetails: null,
+  //   educationDetails: [],
+  //   projectDetails: [],
+  //   keySkills: [],
+  // });
+
+  const { resumeState, setProfileData } = useResume(); 
+  const profileData = resumeState.profileData;
+
   const [sectionErrors, setSectionErrors] = useState({
   personalInfo: false,
   education: false,
@@ -31,48 +36,11 @@ const ApplicantViewProfile = () => {
   experience: false
 });
 
-const validateAllSections = () => {
-  const errors = {
-    personalInfo: validatePersonalInfo(),
-    education: validateEducation(),
-    projects: validateProjects(),
-    experience: validateExperience()
-  };
-
-  setSectionErrors(errors);
-};
-
-// Personal Info validation
-const validatePersonalInfo = () => {
-  const info = profileData.personalInfo; // your data object
-  return !info.firstName || !info.lastName || !info.email;
-};
-
-// Education validation
-const validateEducation = () => {
-  const edu = profileData.education; // array of education objects
-  if (!edu || edu.length === 0) return true;
-  return edu.some(e => !e.degree || !e.institute);
-};
-
-// Projects validation
-const validateProjects = () => {
-  const projects = profileData.projects; // array of projects
-  if (!projects || projects.length === 0) return true;
-  return projects.some(p => !p.title || !p.description || !p.technologies?.length);
-};
-
-// Experience validation
-const validateExperience = () => {
-  const exp = profileData.experience; // array of experience objects
-  if (!exp || exp.length === 0) return true;
-  return exp.some(e => !e.company || !e.role);
-};
 
 
-  useEffect(() => {
-    console.log("PROFILE DATA UPDATED:", profileData);
-  }, [profileData]);
+  // useEffect(() => {
+  //   console.log("PROFILE DATA UPDATED:", profileData);
+  // }, [profileData]);
 
 
 

@@ -27,10 +27,10 @@ const ProcessingLoader = ({ isOpen }) => {
 .loader-modal {
   background: white;
   padding: 40px 60px;
-  border-radius: 8px;
+  border-radius: 4px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   min-width: 400px;
-  border: 1px solid #ddd;
+  border:2px solid #ED8629;
 }
 
 .loader-content {
@@ -59,7 +59,7 @@ const ProcessingLoader = ({ isOpen }) => {
 
 .processing-text {
   margin: 5px 0 0 0;
-  font-size: 22px;
+  font-size: 18px;
   color: #333;
   font-weight: 700;
 }
