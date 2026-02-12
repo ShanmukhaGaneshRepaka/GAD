@@ -129,7 +129,9 @@ function App() {
                 <Route path="/applicant-blog-list" element={<ApplicantHomePage />} />
                 <Route path="/applicant-mentorconnect" element={<ApplicantHomePage />} />
                 <Route path="/applicant-interview-prep" element={<ApplicantHomePage />} />
-                <Route path="/resume-templates" element={<ApplicantHomePage />} />
+                <Route path="/resume-preview" element={<ApplicantHomePage />} />
+                <Route path="/resume-templates" element={<ApplicantHomePage />}
+                 />
 
                 {/* <Route path="/verified-badges" component={VerifiedBadges} /> */}
                 <Route path="/applicant-verified-badges" element={<ApplicantHomePage />} />

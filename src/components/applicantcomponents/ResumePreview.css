@@ -1,0 +1,12 @@
+.resume-preview-wrapper {
+  width: 98%;
+  max-width: 1200px;
+  height: auto;
+  min-height: 90vh;
+
+  background: #FFFFFF;
+  box-shadow: 0px 0px 12px #0000001A;
+  border-radius: 6px;
+  padding: 30px;
+  margin: auto;
+}
