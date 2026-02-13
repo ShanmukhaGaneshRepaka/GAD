@@ -7,7 +7,7 @@ export const ResumeProvider = ({ children }) => {
     profileData: {
       resumeSummary: null,
       personalDetails: null,
-      educationDetails: [],
+      educationDetails: null, // null helps check if data exists at all
       projectDetails: [],
       keySkills: [],
     },
@@ -16,14 +16,19 @@ export const ResumeProvider = ({ children }) => {
     pdfUrl: null
   });
 
-  // Function to update any part of the state
+  // Updates top-level items: updateResumeState('templateId', 5)
   const updateResumeState = (key, value) => {
     setResumeState(prev => ({ ...prev, [key]: value }));
   };
 
-  // Specific helper for full profile data updates
-  const setProfileData = (data) => {
-    setResumeState(prev => ({ ...prev, profileData: data }));
+  // Updates profileData: setProfileData({ ...prev, keySkills: ['React'] })
+  const setProfileData = (updater) => {
+    setResumeState(prevState => ({
+      ...prevState,
+      profileData: typeof updater === "function" 
+        ? updater(prevState.profileData) 
+        : updater
+    }));
   };
 
   return (

@@ -28,7 +28,7 @@ const shimmerAnimation = `
     alignItems: 'center',
     justifyContent: 'center',
     padding: '40px 20px',
-    margin: '20px 0',
+    margin: '20px 0', 
     backgroundColor: '#ffffff',
     borderRadius: '12px',
     border: '1px solid #f0f0f0', // Subtle border like your other cards
@@ -56,9 +56,6 @@ const shimmerAnimation = `
     alignItems: 'center',
     gap: '12px'
   };
-
-  // console.log("resumeState", updateResumeState.jobDescription);
-  console.log("resumeState", resumeState.jobDescription);
 
 
   return (
@@ -110,14 +107,7 @@ const shimmerAnimation = `
         </span>
       </button>
 
-      {/* {showJD && (
-  <Overlay onClose={() => setShowJD(false)}>
-    <JobDescriptionModal onClose={() => setShowJD(false)}
-                          // continueButton={handlecontinueButton}
-                          
-                          />
-  </Overlay>
-)} */}
+      
 {showJD && (
   <Overlay onClose={() => setShowJD(false)}>
     <JobDescriptionModal 

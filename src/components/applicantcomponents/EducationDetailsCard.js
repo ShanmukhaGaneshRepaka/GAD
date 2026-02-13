@@ -7,6 +7,7 @@ import Snackbar from "../common/Snackbar";
 import { apiUrl } from "../../services/ApplicantAPIService";
 import EducationDetailsEditPopup from "./EducationDetailsEditPopup";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
+import { useResume } from "./ResumeContext";
 
 const EDU_API = `${apiUrl}/applicant-education`;
 
@@ -38,6 +39,8 @@ const EducationDetailsCard = ({ applicantId, onChange}) => {
   const [editOpen, setEditOpen] = useState(false);
   const [snackbars, setSnackbars] = useState([]);
 
+  const { setProfileData } = useResume();
+
   const addSnackbar = (snackbar) => setSnackbars((p) => [...p, snackbar]);
   const handleCloseSnackbar = (i) =>
     setSnackbars((p) => p.filter((_, idx) => idx !== i));
@@ -65,11 +68,19 @@ const EducationDetailsCard = ({ applicantId, onChange}) => {
   }, [applicantId]);
   
 // 🔥 ADD THIS EXACT BLOCK
-useEffect(() => {
-  if (data) {
-    onChange?.(data);
-  }
-}, [data]);
+// useEffect(() => {
+//   if (data) {
+//     onChange?.(data);
+//   }
+// }, [data]);
+// useEffect(() => {
+//   if (data) {
+//     setProfileData(prev => ({
+//       ...prev,
+//       educationDetails: data // This adds the data to the global state
+//     }));
+//   }
+// }, [data]);
 
   const g = useMemo(() => data?.graduation || {}, [data]);
   const xii = useMemo(() => data?.classXii || {}, [data]);

@@ -41,9 +41,10 @@ const ResumeSummaryCard = ({ applicantId,onChange}) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [applicantId]);
 
-    useEffect(() => {
-    onChange?.(summary);
-  }, [summary, onChange]);
+//    useEffect(() => {
+//   onChange?.(summary);
+// }, [summary]);   // ✅ remove onChange
+
 
   const displayText =
     summary && summary.length > 0 ? summary : HELP_TEXT;

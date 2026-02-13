@@ -34,11 +34,11 @@ const KeySkillsCard = ({ applicantId,onChange }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [applicantId]);
 
- useEffect(() => {
-  if (skills.length > 0) {
-    onChange?.(skills);
-  }
-}, [skills, onChange]);
+//  useEffect(() => {
+//   if (skills.length > 0) {
+//     onChange?.(skills);
+//   }
+// }, [skills, onChange]);
 
   return (
     <div className="card-base soft-shadow card-skills common_style" style={{ overflow: "hidden" }}>

@@ -131,9 +131,9 @@ const ProjectDetailsCard = ({ applicantId,onChange }) => {
     }
   };
 
-  useEffect(() => {
-    onChange?.(items);
-  }, [items, onChange]);
+  // useEffect(() => {
+  //   onChange?.(items);
+  // }, [items]);
 
   return (
     <>

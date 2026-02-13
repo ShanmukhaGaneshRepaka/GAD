@@ -29,13 +29,9 @@ const ApplicantViewProfile = () => {
   const { resumeState, setProfileData } = useResume(); 
   const profileData = resumeState.profileData;
 
-  const [sectionErrors, setSectionErrors] = useState({
-  personalInfo: false,
-  education: false,
-  projects: false,
-  experience: false
-});
-
+useEffect(() => {
+  console.log("Context profileData updated:", resumeState.profileData);
+}, [resumeState.profileData]);
 
 
   // useEffect(() => {

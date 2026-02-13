@@ -1,0 +1,34 @@
+
+.resume-preview-wrapper {
+    display: flex;
+    width: 100%;
+      
+    height: 80vh;   /* full screen height */
+    overflow: hidden; /* prevent global scroll */
+}
+
+.resume-pdf,
+.resume-portfolio {
+    flex: 1;
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: white;
+      overflow-y: auto; 
+}
+
+.resume-pdf {
+    border-right: 1px solid #e0e0e0;
+     overflow: hidden;
+}
+
+.back-button-templates{
+    background-color: transparent;
+}
+.back-button-templates {
+   background: none !important;
+    border: none !important;
+    box-shadow: none !important;             /* remove border */
+    padding: 0;                /* remove spacing */
+    cursor: pointer;
+    outline: none;             /* remove focus outline */
+}

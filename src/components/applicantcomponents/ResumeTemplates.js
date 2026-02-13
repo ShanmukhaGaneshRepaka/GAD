@@ -4,6 +4,7 @@ import  template1 from './template1.png';
 import './ResumeTemplates.css';
 import { useState } from 'react';
 import ProcessingLoader from './ProcessingLoader';
+import resumeBackButton from './resume-back-button.png';
 
 const ResumeTemplates = () => {
 
