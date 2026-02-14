@@ -14,13 +14,13 @@ const ATSUpdateComponent = () => {   // ✅ ADD const here
 
     return (
         <>
-            <ApplicantHeaderComponent />
-            <ResumeSummaryCard />
-            <PersonalDetailsCard />
-            <EducationDetailsCard />
-            <ProjectDetailsCard />
-            <KeySkillsCard />
-            <SkillBadgesGrid />
+             <ApplicantHeaderComponent applicantId={applicantId} />
+            <ResumeSummaryCard applicantId={applicantId} />
+            <PersonalDetailsCard applicantId={applicantId} />
+            <EducationDetailsCard applicantId={applicantId} />
+            <ProjectDetailsCard applicantId={applicantId} />
+            <KeySkillsCard applicantId={applicantId} />
+            <SkillBadgesGrid applicantId={applicantId} />
         </>
     );
 };

@@ -6,8 +6,8 @@ export const ResumeProvider = ({ children }) => {
   const [resumeState, setResumeState] = useState({
     profileData: {
       resumeSummary: null,
-      personalDetails: null,
-      educationDetails: null, // null helps check if data exists at all
+      personalDetails: {},
+      educationDetails: [], // null helps check if data exists at all
       projectDetails: [],
       keySkills: [],
     },

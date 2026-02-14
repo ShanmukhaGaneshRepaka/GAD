@@ -64,23 +64,17 @@ const EducationDetailsCard = ({ applicantId, onChange}) => {
 
   useEffect(() => {
     if (applicantId) fetchEducation();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [applicantId]);
   
-// 🔥 ADD THIS EXACT BLOCK
-// useEffect(() => {
-//   if (data) {
-//     onChange?.(data);
-//   }
-// }, [data]);
-// useEffect(() => {
-//   if (data) {
-//     setProfileData(prev => ({
-//       ...prev,
-//       educationDetails: data // This adds the data to the global state
-//     }));
-//   }
-// }, [data]);
+
+useEffect(() => {
+  if (data) {
+    setProfileData(prev => ({
+      ...prev,
+      educationDetails: data // This adds the data to the global state
+    }));
+  }
+}, [data]);
 
   const g = useMemo(() => data?.graduation || {}, [data]);
   const xii = useMemo(() => data?.classXii || {}, [data]);

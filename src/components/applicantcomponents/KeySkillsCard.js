@@ -5,14 +5,17 @@ import KeySkillsEditPopup from "./KeySkillsEditPopup";
 import { apiUrl } from "../../services/ApplicantAPIService";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useResume } from "./ResumeContext";
 
 const SKILLS_API = (id) => `${apiUrl}/applicantprofile/${id}/skills`;
+
 
 const KeySkillsCard = ({ applicantId,onChange }) => {
   const [skills, setSkills] = useState([]);
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(true);
   const [editOpen, setEditOpen] = useState(false);
+  const { setProfileData } = useResume();
 
   const fetchSkills = async () => {
     try {
@@ -33,6 +36,15 @@ const KeySkillsCard = ({ applicantId,onChange }) => {
     if (applicantId) fetchSkills();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [applicantId]);
+
+  useEffect(() => {
+    if (skills.length > 0) {
+      setProfileData(prev => ({
+        ...prev,
+        keySkills: skills // This adds the data to the global state
+      }));
+    }
+  }, [skills]);
 
 //  useEffect(() => {
 //   if (skills.length > 0) {
