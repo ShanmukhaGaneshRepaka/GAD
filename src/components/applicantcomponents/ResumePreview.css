@@ -1,29 +1,131 @@
-
 .resume-preview-wrapper {
     display: flex;
     width: 100%;
-      
-    height: 80vh;   /* full screen height */
-    overflow: hidden; /* prevent global scroll */
+    height: 75vh;
+    padding: 20px;              /* reduce padding */
+    box-sizing: border-box;     /* include padding inside width */
+    overflow: hidden;
+    gap: 16px;
+    background-color: white;
+}
+.left-side,
+.right-side {
+    min-width: 0;   /* ⭐ critical fix */
 }
 
-.resume-pdf,
-.resume-portfolio {
+.left-side {
     flex: 1;
-    padding: 20px;
-    box-sizing: border-box;
-    background-color: white;
-      overflow-y: auto; 
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.right-side {
+    flex: 1.4;   /* slightly reduced from 1.5 */
+    overflow: hidden;
 }
 
 .resume-pdf {
-    border-right: 1px solid #e0e0e0;
-     overflow: hidden;
+    flex: 1;
+    width: 100%;
+    height: 100%;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+    box-sizing: border-box;
+    background: white;
+    min-width: 0;
+    max-width: 100%;
+}
+
+.resume-pdf iframe,
+.resume-pdf embed,
+.resume-pdf canvas {
+    width: 100% !important;
+    height: 100% !important;
+    border-radius: 8px;
+    overflow-x: hidden;
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.preview-buttons {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+    justify-content: center;
+}
+
+.preview-btn,
+.download-btn {
+    padding: 10px 24px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.preview-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.preview-btn:hover {
+    background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.download-btn {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    color: white;
+}
+
+.download-btn:hover {
+    background: linear-gradient(135deg, #e083ea 0%, #e5465b 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(245, 87, 108, 0.3);
+}
+
+.fullscreen-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    cursor: pointer;
+}
+
+.fullscreen-resume {
+    width: 80vw;
+    height: 80vh;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    cursor: default;
+}
+
+.fullscreen-resume iframe {
+    width: 100% !important;
+    height: 100% !important;
+    border: none;
+    overflow-x: hidden;
 }
 
 .back-button-templates{
     background-color: transparent;
 }
+
 .back-button-templates {
    background: none !important;
     border: none !important;
@@ -31,4 +133,28 @@
     padding: 0;                /* remove spacing */
     cursor: pointer;
     outline: none;             /* remove focus outline */
+}
+
+.resume-portfolio {
+    height: 100%;
+    overflow-y: auto;
+    padding-right: 8px;
+}
+
+.resume-portfolio::-webkit-scrollbar {
+    width: 8px;
+}
+
+.resume-portfolio::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.resume-portfolio::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 4px;
+}
+
+.resume-portfolio::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
 }

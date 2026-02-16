@@ -1,18 +1,46 @@
 import './JobDescriptionModel.css';
 import { useState } from 'react';
 
-const JobDescriptionModal = ({ onClose,onFinish }) => {
+const JobDescriptionModal = ({ onClose, onFinish }) => {
 
   const [text, setText] = useState("");
+  const [error, setError] = useState("");
+
+  const validateText = (inputText) => {
+    if (!inputText.trim()) {
+      return "Job description cannot be empty if you want to continue";
+    }
+    if (inputText.trim().length < 10) {
+      return "Job description must be at least 10 characters long";
+    }
+    if (inputText.trim().length > 5000) {
+      return "Job description must be less than 5000 characters";
+    }
+    return "";
+  };
 
   const handleContinue = () => {
-    // This calls the function we defined in ApplicantAtsResume
+    const validationError = validateText(text);
+    if (validationError) {
+      setError(validationError);
+      return;
+    }
+    setError("");
     onFinish(text); 
   };
 
   const handleSkip = () => {
-    // This sends an empty string and still moves the user forward
+    setError("");
     onFinish(""); 
+  };
+
+  const handleTextChange = (e) => {
+    const newText = e.target.value;
+    setText(newText);
+    // Clear error when user starts typing
+    if (error && newText.trim()) {
+      setError("");
+    }
   };
   return (
 
@@ -26,17 +54,33 @@ const JobDescriptionModal = ({ onClose,onFinish }) => {
       </p>
 
       <textarea
-        className="jd-textarea"
+        className={`jd-textarea ${error ? 'error' : ''}`}
         placeholder="Paste your job description here..."
         value={text}
-  onChange={(e) => setText(e.target.value)}
+        onChange={handleTextChange}
+        maxLength={5000}
       />
+      
+      {error && (
+        <div className="error-message">
+          {error}
+        </div>
+      )}
+      
+      <div className="character-count">
+        {text.length}/5000 characters
+      </div>
 
 <div className="modal-buttons">
-        <button onClick={handleSkip}>Skip & Continue</button>
+        <button onClick={handleSkip} className="skip-btn">
+          Skip & Continue
+        </button>
         
-        {/* Only show continue if there is text, or just leave it always on */}
-        <button onClick={handleContinue} className="continue">
+        <button 
+          onClick={handleContinue} 
+          className="continue-btn"
+          disabled={!text.trim()}
+        >
           Continue
         </button>
       </div>

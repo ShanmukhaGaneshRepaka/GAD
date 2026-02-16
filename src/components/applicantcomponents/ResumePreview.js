@@ -2,12 +2,80 @@ import './ResumePreview.css';
 import resumeBackButton from './resume-back-button.png';
 import ATSUpdateComponent from './ATSUpdateComponent';
 import { useNavigate } from 'react-router-dom';
-import pdfUrl from './template1.png';   
+import pdfUrl from './template1.png';
+// import { useEffect } from "react";
+import axios from "axios";
+import { useResume } from './ResumeContext';
+import { useEffect, useCallback, useState } from "react";
+
 const ResumePreview = () => {
-
     const navigate = useNavigate();
+    const { resumeState, updateResumeState } = useResume();
+    const [showFullscreen, setShowFullscreen] = useState(false);
 
+    const generatePdf = useCallback(async () => {
 
+        if (resumeState.pdfUrl) return;
+        try {
+            if (!resumeState.templateId) return;
+
+            const jwt = localStorage.getItem("jwtToken");
+
+            const response = await axios.post(
+                "http://localhost:8081/api/resume/download/resume",
+                {
+                    applicantId: 17493,
+                    resumeVersion: resumeState.templateId,
+                    jd: resumeState.jobDescription,
+                    profileData: resumeState.profileData
+                },
+                {
+                    headers: { Authorization: `Bearer ${jwt}` },
+                    responseType: "blob"
+                }
+            );
+
+            const file = new Blob([response.data], { type: "application/pdf" });
+            const url = URL.createObjectURL(file);
+
+            updateResumeState("pdfUrl", url);
+
+        } catch (error) {
+            console.error("PDF generation failed:", error);
+        }
+    }, [resumeState.templateId, resumeState.jobDescription, resumeState.profileData]);
+
+    useEffect(() => {
+        if (!resumeState.pdfUrl) {
+            generatePdf();
+        }
+    }, []);
+
+    console.log("PDF URL:", resumeState.pdfUrl);
+    console.log("Template:", resumeState.templateId);
+    console.log("Profile:", resumeState.profileData);
+
+    const handleDownload = useCallback(() => {
+        if (resumeState.pdfUrl) {
+            const link = document.createElement('a');
+            link.href = resumeState.pdfUrl;
+            link.download = 'resume.pdf';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    }, [resumeState.pdfUrl]);
+
+    const handleFullscreenPreview = () => {
+        setShowFullscreen(true);
+    };
+
+    const closeFullscreen = (e) => {
+        // Close only when clicking on the overlay (outside the resume content)
+        if (e.target.classList.contains('fullscreen-overlay')) {
+            setShowFullscreen(false);
+        }
+    };
 
     return (
 
@@ -27,22 +95,47 @@ const ResumePreview = () => {
                 </div>
 
                 <div className="resume-preview-wrapper">
-                    <div className="resume-pdf">
-                        {/* <ApplicantViewProfile/> */}
-                        {/* <iframe
-                            src="/sample-resume.pdf"
-                            style={{ width: "100%", height: "100%" }}
-                            title="Resume Preview"
-                        /> */}
-                        <img src={pdfUrl} alt="Resume Preview" />
+                    <div className='left-side'>
+                        <div className="resume-pdf">
+
+                            <iframe
+                                src={`${resumeState.pdfUrl}#toolbar=0`}
+                                title="Resume Preview"
+                                style={{ width: "100%", height: "100%", border: "none" }}
+                            />
+
+
+                        </div>
+                        <div className="preview-buttons">
+                            <button className="preview-btn" onClick={handleFullscreenPreview}>Preview</button>
+                            <button className="download-btn" onClick={handleDownload}>Download</button>
+                        </div>
+                    </div>
+
+
+                    <div className='right-side'>
+
+                        <div className="resume-portfolio">
+                            <ATSUpdateComponent />
+                        </div>
 
                     </div>
-                    <div className="resume-portfolio">
-                        <ATSUpdateComponent />
-                    </div>
+                        
 
 
                 </div>
+
+                {showFullscreen && (
+                    <div className="fullscreen-overlay" onClick={closeFullscreen}>
+                        <div className="fullscreen-resume">
+                            <iframe
+                                src={`${resumeState.pdfUrl}#toolbar=0`}
+                                title="Fullscreen Resume Preview"
+                                style={{ width: "100%", height: "100%", border: "none" }}
+                            />
+                        </div>
+                    </div>
+                )}
             </div>
 
 
