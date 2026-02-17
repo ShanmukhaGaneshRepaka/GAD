@@ -1,16 +1,17 @@
 .resume-preview-wrapper {
     display: flex;
     width: 100%;
-    height: 75vh;
-    padding: 20px;              /* reduce padding */
-    box-sizing: border-box;     /* include padding inside width */
+    height: 80vh;
+    padding: 20px;
+    box-sizing: border-box;
     overflow: hidden;
     gap: 16px;
     background-color: white;
 }
+
 .left-side,
 .right-side {
-    min-width: 0;   /* ⭐ critical fix */
+    min-width: 0;
 }
 
 .left-side {
@@ -22,7 +23,11 @@
 }
 
 .right-side {
-    flex: 1.4;   /* slightly reduced from 1.5 */
+
+    flex: 1.4;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
     overflow: hidden;
 }
 
@@ -37,6 +42,9 @@
     background: white;
     min-width: 0;
     max-width: 100%;
+    overflow: hidden !important;
+    position: relative !important;
+    object-fit: contain;
 }
 
 .resume-pdf iframe,
@@ -49,6 +57,11 @@
     min-width: 0;
     max-width: 100%;
     box-sizing: border-box;
+}
+
+.resume-pdf iframe {
+    overflow: hidden;
+    object-fit: contain;
 }
 
 .preview-buttons {
@@ -70,8 +83,8 @@
 }
 
 .preview-btn {
-    background-color: #F97316;
-    color: white;
+    background: transparent linear-gradient(286deg, #FBBB5C 0%, #E66A0E 100%) 0% 0% no-repeat padding-box !important;
+    color: white !important;
     border: none;
     transform: translateY(-1px);
     box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
@@ -82,11 +95,12 @@
 }
 
 .download-btn {
-    background-color: white;
-    color: #F97316;
-    border: 2px solid #F97316;
+    background-color: #FFF8F5 !important;
+    border-color: #EA670C !important;
+    color: #EA670C !important;
     transform: translateY(-1px);
     box-shadow: 0 4px 12px rgba(249, 115, 22, 0.2);
+    padding: 10px 26px !important;
 }
 
 .download-btn:hover {
@@ -126,21 +140,23 @@
     overflow-x: hidden;
 }
 
-.back-button-templates{
+.back-button-templates {
     background-color: transparent;
 }
 
 .back-button-templates {
-   background: none !important;
+    background: none !important;
     border: none !important;
-    box-shadow: none !important;             /* remove border */
-    padding: 0;                /* remove spacing */
+    box-shadow: none !important;
+    padding: 0;
     cursor: pointer;
-    outline: none;             /* remove focus outline */
+    outline: none;
 }
 
 .resume-portfolio {
-    height: 100%;
+
+
+    flex: 1;
     overflow-y: auto;
     padding-right: 8px;
 }
@@ -154,11 +170,39 @@
     border-radius: 4px;
 }
 
-/* .resume-portfolio::-webkit-scrollbar-thumb {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    border-radius: 4px;
+.update-btn {
+    margin-top: 8px;
+    align-self: flex-end;
+    padding: 10px 20px;
 }
 
-.resume-portfolio::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
-} */
+.update-btn button {
+    background-color: white;
+    padding: 12px 26px;
+    color: #F97316;
+    border: 1px solid #F97316;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
+    cursor: pointer;
+}
+
+@media (max-width: 900px) {
+    .resume-preview-wrapper {
+        flex-direction: column;
+
+    }
+
+    .left-panel {
+        flex: 0.45;
+    }
+
+    .right-panel {
+        flex: 0.55;
+    }
+
+    .left-side,
+    .right-side {
+        width: 100%;
+        height: auto;
+    }
+}

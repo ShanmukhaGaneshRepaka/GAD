@@ -7,20 +7,14 @@ export const useUserContext = () => {
 };
 
 const UserProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-  const [userType, setUserType] = useState('');
-  useEffect(() => {
+  const [user, setUser] = useState(() => {
     const storedUser = localStorage.getItem('user');
+    return storedUser ? JSON.parse(storedUser) : null;
+  });
+  const [userType, setUserType] = useState(() => {
     const storedUserType = localStorage.getItem('userType');
-
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
-
-    if (storedUserType) {
-      setUserType(storedUserType);
-    }
-  }, []);
+    return storedUserType || '';
+  });
   useEffect(() => {
     if (user) {
       localStorage.setItem('user', JSON.stringify(user));

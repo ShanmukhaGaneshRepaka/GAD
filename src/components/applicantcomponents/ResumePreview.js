@@ -54,15 +54,17 @@ const generatePdf = useCallback(async () => {
         const jwt = localStorage.getItem("jwtToken");
 
         const payload = {
-            applicantId: localStorage.getItem("applicantId"),
-            resumeVersion: resumeState.templateId,
-            jd: resumeState.jobDescription,
-
-            // resumeSummary: resumeState.profileData.resumeSummary,
-            // personalDetails: resumeState.profileData.personalDetails,
-            // educationDetails: resumeState.profileData.educationDetails,
-            // projectDetails: resumeState.profileData.projectDetails,
-            // keySkills: resumeState.profileData.keySkills
+            // applicantId: localStorage.getItem("applicantId"),
+            // resumeVersion: resumeState.templateId,
+            // jd: resumeState.jobDescription,
+   applicantId: applicantId,   // ✅ use context
+    resumeVersion: resumeState.templateId,
+    jd: resumeState.jobDescription,
+            resumeSummary: resumeState.profileData.resumeSummary,
+            personalDetails: resumeState.profileData.personalDetails,
+            educationDetails: resumeState.profileData.educationDetails,
+            projectDetails: resumeState.profileData.projectDetails,
+            keySkills: resumeState.profileData.keySkills
         };
 
         const response = await axios.post(
@@ -72,28 +74,60 @@ const generatePdf = useCallback(async () => {
                 headers: { Authorization: `Bearer ${jwt}` },
                 responseType: "blob"
             }
+            
         );
 
         const file = new Blob([response.data], { type: "application/pdf" });
-        const url = URL.createObjectURL(file);
+        // const url = URL.createObjectURL(file);
+        const url = URL.createObjectURL(file) + `#t=${Date.now()}`;
 
         updateResumeState("pdfUrl", url);
 
     } catch (error) {
         console.error("PDF generation failed:", error);
     }
-}, [resumeState.templateId, resumeState.jobDescription, resumeState.profileData]);
+}, [resumeState.templateId, resumeState.jobDescription]);
 
     useEffect(() => {
-        // if (!resumeState.pdfUrl) {
-        //     generatePdf();
-        // }
-        console.log("Resume state in preview updated:", resumeState);
-    },);
+        if (resumeState.templateId && !resumeState.pdfUrl) {
+            generatePdf();
+        }
+    }, [resumeState.templateId, resumeState.pdfUrl]); 
+
+    // Also trigger if pdfUrl is blob but revoked/invalid? 
+    // Actually, on refresh, pdfUrl from localStorage is a string like "blob:..." but it's dead.
+    // We can't easily check if a blob URL is dead without fetching it.
+    // BUT we know that if we just loaded from localStorage (refresh), we SHOULD regenerate.
+    // The issue is distinguishing "just loaded from LS" vs "just generated".
+    // "Just generated" -> pdfUrl is valid.
+    // "Loaded from LS" -> pdfUrl is invalid.
+    
+    // Simplest approach: Always regenerate on mount if templateId exists.
+    // The cost is one extra generation on navigation from Templates page?
+    // When navigating from Templates, we pass state: { pdfUrl: fileURL }.
+    // But ResumeContext also has it.
+    // If we have a valid pdfUrl in state (from navigation), maybe we don't need to regen?
+    // But on refresh, we don't have navigation state.
+    
+    // Let's rely on the fact that if we just refreshed, we want to ensure it works.
+    
+    useEffect(() => {
+        const loadPdf = async () => {
+             if (resumeState.templateId) {
+                 // Check if the current pdfUrl is functional? content-length > 0?
+                 // Or just regenerate to be safe.
+                 await generatePdf();
+             }
+        };
+        loadPdf();
+    }, []); // Run once on mount to restore.
 
     console.log("PDF URL:", resumeState.pdfUrl);
     console.log("Template:", resumeState.templateId);
     console.log("Profile:", resumeState.profileData);
+    console.log("ApplicantId:", applicantId);
+console.log("LocalStorage ApplicantId:", localStorage.getItem("applicantId"));
+
 
     const handleDownload = useCallback(() => {
         if (resumeState.pdfUrl) {
@@ -161,6 +195,9 @@ const generatePdf = useCallback(async () => {
                         <div className="resume-portfolio">
                             <ATSUpdateComponent />
                            
+                        </div>
+                        <div className="update-btn">
+                            <button className="update-resume-butn" onClick={generatePdf}>Update</button>
                         </div>
                       
                     </div>

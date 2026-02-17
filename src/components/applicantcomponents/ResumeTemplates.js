@@ -49,22 +49,22 @@ const applicantId = user?.id;
             Authorization: `Bearer ${jwt}`,
             "Content-Type": "application/json",
           },
-          responseType: "blob", // ⚠️ IMPORTANT for PDF
+          responseType: "blob", 
         }
       );
 
-      // 👉 convert blob to URL
+      
       const file = new Blob([response.data], { type: "application/pdf" });
       const fileURL = window.URL.createObjectURL(file);
       updateResumeState("pdfUrl", fileURL);
 updateResumeState("templateId", selectedTemplate);
-// updateResumeState("jobDescription", "");
 
 
-      // 👉 close loader
+
+      
       setIsOpen(false);
 
-      // 👉 navigate with pdf url
+     
       navigate("/resume-preview", {
         state: { pdfUrl: fileURL },
        
