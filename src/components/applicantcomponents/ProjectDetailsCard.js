@@ -101,7 +101,7 @@ const ProjectDetailsCard = ({ applicantId,onChange }) => {
       if (items) {
         setProfileData(prev => ({
           ...prev,
-          projects: items // This adds the data to the global state
+          projectDetails: items // This adds the data to the global state
         }));
       }
     }, [items]);

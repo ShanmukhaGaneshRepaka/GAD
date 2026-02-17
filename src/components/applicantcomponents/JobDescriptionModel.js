@@ -1,10 +1,12 @@
 import './JobDescriptionModel.css';
 import { useState } from 'react';
+import { useResume } from './ResumeContext';
 
 const JobDescriptionModal = ({ onClose, onFinish }) => {
 
   const [text, setText] = useState("");
   const [error, setError] = useState("");
+  const { updateResumeState } = useResume();
 
   const validateText = (inputText) => {
     if (!inputText.trim()) {
@@ -26,6 +28,7 @@ const JobDescriptionModal = ({ onClose, onFinish }) => {
       return;
     }
     setError("");
+    updateResumeState('jobDescription', text);
     onFinish(text); 
   };
 

@@ -16,22 +16,14 @@ import { useResume } from "./ResumeContext";
 const ApplicantViewProfile = () => {
   const { user } = useUserContext();
   const applicantId = user?.id;
-  
-  // 🔥 CENTRAL AGGREGATED STATE
-  // const [profileData, setProfileData] = useState({
-  //   resumeSummary: null,
-  //   personalDetails: null,
-  //   educationDetails: [],
-  //   projectDetails: [],
-  //   keySkills: [],
-  // });
-
   const { resumeState, setProfileData } = useResume(); 
   const profileData = resumeState.profileData;
 
 useEffect(() => {
   console.log("Context profileData updated:", resumeState.profileData);
-}, [resumeState.profileData]);
+    console.log("Context profileData updated:", resumeState.jobDescription);
+
+}, [resumeState]);
 
 
   // useEffect(() => {

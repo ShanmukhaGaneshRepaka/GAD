@@ -6,16 +6,20 @@ import "../../../src/stylesheets/dashboard.css";
 import template1 from "./template1.png";
 import "./ResumeTemplates.css";
 import ProcessingLoader from "./ProcessingLoader";
-// import useResume from "./ResumeContext";
+import { useUserContext } from "../common/UserProvider";
 import { useResume } from "./ResumeContext";
-
-
+import Overlay from "./Overlay";
+import JobDescriptionModal from "./JobDescriptionModel";
+import resumeBackButton from "./resume-back-button.png";
+import { useEffect } from "react";
 const ResumeTemplates = () => {
   const [selectedTemplate, setSelectedTemplate] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
   // const { resumeState, setProfileData } = useResume();
   const { resumeState, updateResumeState } = useResume();
-
+ const { user } = useUserContext();
+ const[showJD, setShowJD] = useState(false);
+const applicantId = user?.id;
   const navigate = useNavigate();
 
   const handleGenerate = async (e) => {
@@ -36,7 +40,7 @@ const ResumeTemplates = () => {
       const response = await axios.post(
         "http://localhost:8081/api/resume/download/resume",
         {
-          applicantId: 17493,
+          applicantId: applicantId,
           resumeVersion: selectedTemplate,
           jd: "Experienced Java developer with knowledge in Spring Boot, microservices, and REST APIs.",
         },
@@ -54,6 +58,7 @@ const ResumeTemplates = () => {
       const fileURL = window.URL.createObjectURL(file);
       updateResumeState("pdfUrl", fileURL);
 updateResumeState("templateId", selectedTemplate);
+// updateResumeState("jobDescription", "");
 
 
       // 👉 close loader
@@ -74,14 +79,22 @@ updateResumeState("templateId", selectedTemplate);
     }
   };
 
+  useEffect(() => {
+    console.log("Resume state in templates:", resumeState);
+  }, []);
+
   return (
     <div className="border-style">
       <div className="blur-border-style"></div>
 
       <div className="dashboard__content resume-template">
-        <div className="resume-wrapper">
-          <h2 className="title">AI Resume Template</h2>
+        <div className="resume-template-header">
+        <img src={resumeBackButton} alt="Back" onClick={() => setShowJD(true)} />
+        <h2 className="title">Select ATS Resume Template</h2>
+        </div>
 
+        <div className="resume-wrapper">
+          
           <div className="template-container">
             {[1, 2, 3, 4].map((id) => (
               <div
@@ -107,8 +120,27 @@ updateResumeState("templateId", selectedTemplate);
 
       {/* 🔄 loader */}
       {isOpen && <ProcessingLoader isOpen={isOpen} />}
+       {showJD && (
+  <Overlay onClose={() => setShowJD(false)}>
+    <JobDescriptionModal 
+       onClose={() => setShowJD(false)}
+       onFinish={(jobText) => {
+          // 1. Store the JD (will be "" if they skip)
+          updateResumeState('jobDescription', jobText);
+          
+          
+          // 2. Close the modal
+          setShowJD(false);
+          
+          // 3. Navigate to the Templates page     
+          navigate('/resume-templates');
+       }}
+    />
+  </Overlay>
+)}
     </div>
   );
+ 
 };
 
 export default ResumeTemplates;

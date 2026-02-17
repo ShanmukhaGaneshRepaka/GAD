@@ -116,7 +116,9 @@ const shimmerAnimation = `
           // 1. Store the JD (will be "" if they skip)
           updateResumeState('jobDescription', jobText);
           
-          
+           console.log("Stored Job Description:", jobText);
+           console.log("Resume State:", resumeState);
+
           // 2. Close the modal
           setShowJD(false);
           

@@ -30,12 +30,32 @@
   padding: 30px;
   margin: auto;
 }
-
+.resume-template-header {
+  margin-left: 25px;
+  margin-top: 25px;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+}
+.resume-template-header img{
+  cursor: pointer;
+  align-self: center;
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  margin-right: 7px;
+}
+.resume-template-header h2{
+  margin-left: 20px;
+  font-size: 24px;
+  margin: 0;
+  line-height: 1;
+}
 
 /* Title */
 .title {
   margin-bottom: 25px;
-  font-size: 16px;
+  font-size: 10x;
   font-weight: 600;
 }
 
@@ -57,9 +77,14 @@
 
 /* Image styling */
 .template-card img {
-  width: 258px;
+  /* width: 258px;
   height: 364px;
   object-fit: cover;
+  border-radius: 6px;
+  cursor: pointer; */
+   width: 100%;        /* take full card width */
+  height: auto;       /* keep ratio */
+  object-fit: contain; /* or cover if you want tighter crop */
   border-radius: 6px;
   cursor: pointer;
 }
@@ -72,8 +97,12 @@
 
 /* Active selected template */
 .template-card.active {
-  border: 2px solid #f39c12;
-  background-color: #fff7ed;
+  /* border: 2px solid #f39c12; */
+  background:#FFF3E8 0% 0% no-repeat padding-box;
+  padding: 30px;
+  border: 2px solid #ED8629;
+border-radius: 6px;
+opacity: 1;
 }
 
 /* Button inside active card */

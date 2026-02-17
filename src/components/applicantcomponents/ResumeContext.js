@@ -1,41 +1,112 @@
+// import React, { createContext, useContext, useState } from 'react';
+
+// const ResumeContext = createContext();
+
+// export const ResumeProvider = ({ children }) => {
+//   const [resumeState, setResumeState] = useState({
+//     profileData: {
+//       resumeSummary: null,
+//       personalDetails: {},
+//       educationDetails: [], // null helps check if data exists at all
+//       projectDetails: [],
+//       keySkills: [],
+//     },
+//     jobDescription: "",
+//     templateId: null,
+//     pdfUrl: null
+//   });
+
+//   // Updates top-level items: updateResumeState('templateId', 5)
+//   const updateResumeState = (key, value) => {
+//     setResumeState(prev => ({ ...prev, [key]: value }));
+//   };
+
+//   // Updates profileData: setProfileData({ ...prev, keySkills: ['React'] })
+//   const setProfileData = (updater) => {
+//     setResumeState(prevState => ({
+//       ...prevState,
+//       profileData: typeof updater === "function" 
+//         ? updater(prevState.profileData) 
+//         : updater
+//     }));
+//   };
+//   return (
+//     <ResumeContext.Provider value={{ resumeState, updateResumeState, setProfileData }}>
+//       {children}
+//     </ResumeContext.Provider>
+//   );
+// };
+
+// export const useResume = () => useContext(ResumeContext);
+
 import React, { createContext, useContext, useState } from 'react';
 
 const ResumeContext = createContext();
 
+const initialState = {
+  profileData: {
+    resumeSummary: null,
+    personalDetails: {},
+    educationDetails: [],
+    projectDetails: [],
+    keySkills: [],
+  },
+  jobDescription: "",
+  templateId: null,
+  pdfUrl: null
+};
+
 export const ResumeProvider = ({ children }) => {
-  const [resumeState, setResumeState] = useState({
-    profileData: {
-      resumeSummary: null,
-      personalDetails: {},
-      educationDetails: [], // null helps check if data exists at all
-      projectDetails: [],
-      keySkills: [],
-    },
-    jobDescription: "",
-    templateId: null,
-    pdfUrl: null
+
+  // ✅ Load from localStorage on first render
+  const [resumeState, setResumeState] = useState(() => {
+    const saved = localStorage.getItem("resumeState");
+    return saved ? JSON.parse(saved) : initialState;
   });
 
-  // Updates top-level items: updateResumeState('templateId', 5)
+  // ✅ Update top-level fields
   const updateResumeState = (key, value) => {
-    setResumeState(prev => ({ ...prev, [key]: value }));
+    setResumeState(prev => {
+      const updated = { ...prev, [key]: value };
+
+      localStorage.setItem("resumeState", JSON.stringify(updated));
+
+      return updated;
+    });
   };
 
-  // Updates profileData: setProfileData({ ...prev, keySkills: ['React'] })
+  // ✅ Update profileData safely
   const setProfileData = (updater) => {
-    setResumeState(prevState => ({
-      ...prevState,
-      profileData: typeof updater === "function" 
-        ? updater(prevState.profileData) 
-        : updater
-    }));
+    setResumeState(prevState => {
+
+      const updatedProfile =
+        typeof updater === "function"
+          ? updater(prevState.profileData)
+          : updater;
+
+      const updatedState = {
+        ...prevState,
+        profileData: updatedProfile
+      };
+
+      localStorage.setItem("resumeState", JSON.stringify(updatedState));
+
+      return updatedState;
+    });
   };
 
   return (
-    <ResumeContext.Provider value={{ resumeState, updateResumeState, setProfileData }}>
+    <ResumeContext.Provider
+      value={{
+        resumeState,
+        updateResumeState,
+        setProfileData
+      }}
+    >
       {children}
     </ResumeContext.Provider>
   );
 };
 
 export const useResume = () => useContext(ResumeContext);
+

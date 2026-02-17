@@ -7,49 +7,89 @@ import pdfUrl from './template1.png';
 import axios from "axios";
 import { useResume } from './ResumeContext';
 import { useEffect, useCallback, useState } from "react";
+import { useUserContext } from "../common/UserProvider";
 
 const ResumePreview = () => {
     const navigate = useNavigate();
     const { resumeState, updateResumeState } = useResume();
     const [showFullscreen, setShowFullscreen] = useState(false);
+    const { user } = useUserContext();
+const applicantId = user?.id;
 
-    const generatePdf = useCallback(async () => {
+    // const generatePdf = useCallback(async () => {
 
-        if (resumeState.pdfUrl) return;
-        try {
-            if (!resumeState.templateId) return;
+        
+    //     try {
+    //         if (!resumeState.templateId) return;
 
-            const jwt = localStorage.getItem("jwtToken");
+    //         const jwt = localStorage.getItem("jwtToken");
 
-            const response = await axios.post(
-                "http://localhost:8081/api/resume/download/resume",
-                {
-                    applicantId: 17493,
-                    resumeVersion: resumeState.templateId,
-                    jd: resumeState.jobDescription,
-                    profileData: resumeState.profileData
-                },
-                {
-                    headers: { Authorization: `Bearer ${jwt}` },
-                    responseType: "blob"
-                }
-            );
+    //         const response = await axios.post(
+    //             "http://localhost:8081/api/resume/download/resume",
+    //             {
+    //                 applicantId: applicantId,
+    //                 resumeVersion: resumeState.templateId,
+    //                 jd: resumeState.jobDescription,
+    //                 profileData: resumeState.profileData
+    //             },
+    //             {
+    //                 headers: { Authorization: `Bearer ${jwt}` },
+    //                 responseType: "blob"
+    //             }
+    //         );
 
-            const file = new Blob([response.data], { type: "application/pdf" });
-            const url = URL.createObjectURL(file);
+    //         const file = new Blob([response.data], { type: "application/pdf" });
+    //         const url = URL.createObjectURL(file);
 
-            updateResumeState("pdfUrl", url);
+    //         updateResumeState("pdfUrl", url);
 
-        } catch (error) {
-            console.error("PDF generation failed:", error);
-        }
-    }, [resumeState.templateId, resumeState.jobDescription, resumeState.profileData]);
+    //     } catch (error) {
+    //         console.error("PDF generation failed:", error);
+    //     }
+    // }, [resumeState.templateId, resumeState.jobDescription, resumeState.profileData]);
+const generatePdf = useCallback(async () => {
+    try {
+        if (!resumeState.templateId) return;
+
+        const jwt = localStorage.getItem("jwtToken");
+
+        const payload = {
+            applicantId: localStorage.getItem("applicantId"),
+            resumeVersion: resumeState.templateId,
+            jd: resumeState.jobDescription,
+
+            // resumeSummary: resumeState.profileData.resumeSummary,
+            // personalDetails: resumeState.profileData.personalDetails,
+            // educationDetails: resumeState.profileData.educationDetails,
+            // projectDetails: resumeState.profileData.projectDetails,
+            // keySkills: resumeState.profileData.keySkills
+        };
+
+        const response = await axios.post(
+            "http://localhost:8081/api/resume/download/resume",
+            payload,
+            {
+                headers: { Authorization: `Bearer ${jwt}` },
+                responseType: "blob"
+            }
+        );
+
+        const file = new Blob([response.data], { type: "application/pdf" });
+        const url = URL.createObjectURL(file);
+
+        updateResumeState("pdfUrl", url);
+
+    } catch (error) {
+        console.error("PDF generation failed:", error);
+    }
+}, [resumeState.templateId, resumeState.jobDescription, resumeState.profileData]);
 
     useEffect(() => {
-        if (!resumeState.pdfUrl) {
-            generatePdf();
-        }
-    }, []);
+        // if (!resumeState.pdfUrl) {
+        //     generatePdf();
+        // }
+        console.log("Resume state in preview updated:", resumeState);
+    },);
 
     console.log("PDF URL:", resumeState.pdfUrl);
     console.log("Template:", resumeState.templateId);
@@ -76,6 +116,9 @@ const ResumePreview = () => {
             setShowFullscreen(false);
         }
     };
+    useEffect(() => {
+        console.log("Resume state updated:", resumeState);
+    }, []);
 
     return (
 
@@ -117,14 +160,15 @@ const ResumePreview = () => {
 
                         <div className="resume-portfolio">
                             <ATSUpdateComponent />
+                           
                         </div>
-
+                      
                     </div>
                         
 
 
                 </div>
-
+              
                 {showFullscreen && (
                     <div className="fullscreen-overlay" onClick={closeFullscreen}>
                         <div className="fullscreen-resume">

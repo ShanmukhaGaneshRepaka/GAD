@@ -56,7 +56,7 @@ background-color: #ffffff;
 }
 
 .jd-textarea.error {
-  border-color: #ff4444;
+  border-color: #ed8629;
 }
 
 /* Error message */
@@ -87,7 +87,7 @@ background-color: #ffffff;
   padding: 10px 20px;
   border: 2px solid #ed8629;
   background: transparent;
-  color: #ed8629;
+  color: #ed8629!important;
   border-radius: 6px;
   font-size: 14px;
   font-weight: 500;
@@ -97,13 +97,13 @@ background-color: #ffffff;
 
 .skip-btn:hover {
   background: #ed8629;
-  color: white;
+  color: white!important;
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(237, 134, 41, 0.3);
 }
 
 .continue-btn {
-  padding: 10px 20px;
+  padding: 20px 30px;
   border: none;
   background: linear-gradient(135deg, #ed8629 0%, #ff6b35 100%);
   color: white;
@@ -118,6 +118,7 @@ background-color: #ffffff;
   background: linear-gradient(135deg, #d97620 0%, #e55a2b 100%);
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(237, 134, 41, 0.3);
+  color: white;
 }
 
 .continue-btn:disabled {
