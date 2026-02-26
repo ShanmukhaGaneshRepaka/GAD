@@ -2,16 +2,18 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-import "../../../src/stylesheets/dashboard.css";
+import "../../../stylesheets/dashboard.css";
 import template1 from "./template1.png";
 import "./ResumeTemplates.css";
-import ProcessingLoader from "./ProcessingLoader";
-import { useUserContext } from "../common/UserProvider";
-import { useResume } from "./ResumeContext";
+import ProcessingLoader from "../ProcessingLoader";
+import { useUserContext } from "../../common/UserProvider";
+import { useResume } from "../ResumeContext";
 import Overlay from "./Overlay";
 import JobDescriptionModal from "./JobDescriptionModel";
 import resumeBackButton from "./resume-back-button.png";
 import { useEffect } from "react";
+import JobDescriptionModel from "./JobDescriptionModel";
+
 const ResumeTemplates = () => {
   const [selectedTemplate, setSelectedTemplate] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -105,7 +107,12 @@ updateResumeState("templateId", selectedTemplate);
                 onClick={() => setSelectedTemplate(id)}
               >
                 <img src={template1} alt={`template${id}`} />
-                <p>Resume Template {id}</p>
+                <p><b>
+                  {id === 1 && "Professional Classic"}
+                  {id === 2 && "Modern Executive"}
+                  {id === 3 && "Creative Designer"}
+                  {id === 4 && "Technical Developer"}
+                </b></p>
 
                 {selectedTemplate === id && (
                   <button onClick={handleGenerate}>

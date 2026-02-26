@@ -115,3 +115,40 @@ opacity: 1;
   border-radius: 4px;
   cursor: pointer;
 }
+
+/* Tablet view */
+@media (max-width: 768px) {
+  .template-card p {
+    font-size: 14px !important;
+  }
+  .template-card p b {
+    font-size: 14px !important;
+  }
+
+  .resume-template-header h2{
+    font-size: 20px !important;
+  }
+}
+
+/* Mobile view */
+@media (max-width: 480px) {
+  .template-card p {
+    font-size: 16px !important;
+  }
+  .template-card p b {
+    font-size: 12px !important;
+  }
+
+ 
+
+  .resume-template-header img{
+    width: 21px !important;
+    height: 21px !important;
+  }
+
+
+  
+  .resume-template-header h2{
+    font-size: 18px !important;
+  }
+}

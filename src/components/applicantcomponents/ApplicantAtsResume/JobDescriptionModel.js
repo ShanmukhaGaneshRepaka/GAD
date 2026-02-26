@@ -1,6 +1,6 @@
 import './JobDescriptionModel.css';
 import { useState } from 'react';
-import { useResume } from './ResumeContext';
+import { useResume } from '../ResumeContext';
 
 const JobDescriptionModal = ({ onClose, onFinish }) => {
 

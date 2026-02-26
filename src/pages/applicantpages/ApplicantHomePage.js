@@ -32,8 +32,8 @@ import MyJobs from '../../components/applicantcomponents/MyJobs';
 import InterviewPrepPage from './InterviewPrepPage';
 import FeedbackFormsList from '../../components/applicantcomponents/FeedbackFormsList';
 import FeedbackFormFill from '../../components/applicantcomponents/FeedbackFormFill';
-import ResumeTemplates from '../../components/applicantcomponents/ResumeTemplates';
-import ResumePreview from '../../components/applicantcomponents/ResumePreview';
+import ResumeTemplates from '../../components/applicantcomponents/ApplicantAtsResume/ResumeTemplates';
+import ResumePreview from '../../components/applicantcomponents/ApplicantAtsResume/ResumePreview';
 
 function ApplicantHomePage() {
   const [activeRoute, setActiveRoute] = useState('');

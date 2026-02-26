@@ -9,10 +9,11 @@ import KeySkillsCard from "./KeySkillsCard";
 import SkillBadgesGrid from "./SkillBadgesGrid";
 import "./modalpopup.css";
 import "./Portfolio.css";
-import ApplicantAtsResume from "./ApplicantAtsResume";
+import ApplicantAtsResume from "./ApplicantAtsResume/ApplicantAtsResume";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useResume } from "./ResumeContext";
+// import ApplicantAtsResume from "./ApplicantAtsResume/ApplicantAtsResume";
 const ApplicantViewProfile = () => {
   const { user } = useUserContext();
   const applicantId = user?.id;

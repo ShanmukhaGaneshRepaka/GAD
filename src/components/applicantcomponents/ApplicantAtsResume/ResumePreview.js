@@ -1,18 +1,19 @@
 import './ResumePreview.css';
 import resumeBackButton from './resume-back-button.png';
-import ATSUpdateComponent from './ATSUpdateComponent';
+import ATSUpdateComponent from '../ATSUpdateComponent';
 import { useNavigate } from 'react-router-dom';
 import pdfUrl from './template1.png';
 // import { useEffect } from "react";
 import axios from "axios";
-import { useResume } from './ResumeContext';
+import { useResume } from '../ResumeContext';
 import { useEffect, useCallback, useState } from "react";
-import { useUserContext } from "../common/UserProvider";
+import { useUserContext } from "../../common/UserProvider";
 
 const ResumePreview = () => {
     const navigate = useNavigate();
     const { resumeState, updateResumeState } = useResume();
     const [showFullscreen, setShowFullscreen] = useState(false);
+    const [showPreviewModal, setShowPreviewModal] = useState(false);
     const { user } = useUserContext();
 const applicantId = user?.id;
 
@@ -79,7 +80,7 @@ const generatePdf = useCallback(async () => {
 
         const file = new Blob([response.data], { type: "application/pdf" });
         // const url = URL.createObjectURL(file);
-        const url = URL.createObjectURL(file) + `#t=${Date.now()}`;
+        const url = URL.createObjectURL(file) ;
 
         updateResumeState("pdfUrl", url);
 
@@ -144,10 +145,21 @@ console.log("LocalStorage ApplicantId:", localStorage.getItem("applicantId"));
         setShowFullscreen(true);
     };
 
+    const handlePreviewModal = () => {
+        setShowPreviewModal(true);
+    };
+
     const closeFullscreen = (e) => {
         // Close only when clicking on the overlay (outside the resume content)
         if (e.target.classList.contains('fullscreen-overlay')) {
             setShowFullscreen(false);
+        }
+    };
+
+    const closePreviewModal = (e) => {
+        // Close only when clicking on the overlay (outside the modal content)
+        if (e.target.classList.contains('preview-modal-overlay')) {
+            setShowPreviewModal(false);
         }
     };
     useEffect(() => {
@@ -176,15 +188,23 @@ console.log("LocalStorage ApplicantId:", localStorage.getItem("applicantId"));
                         <div className="resume-pdf">
 
                             <iframe
-                                src={`${resumeState.pdfUrl}#toolbar=0`}
+                                src={`${resumeState.pdfUrl}#toolbar=0&view=FitH`}
                                 title="Resume Preview"
-                                style={{ width: "100%", height: "100%", border: "none" }}
+                                style={{ 
+                                        width: "100%", 
+                                        height: "100%", 
+                                        border: "none",
+                                        display: "block",
+                                        margin: "0",
+                                        padding: "0",
+                                        overflow: "hidden"
+                                }}
                             />
 
 
                         </div>
                         <div className="preview-buttons">
-                            <button className="preview-btn" onClick={handleFullscreenPreview}>Preview</button>
+                            <button className="preview-btn" onClick={handlePreviewModal}>Preview</button>
                             <button className="download-btn" onClick={handleDownload}>Download</button>
                         </div>
                     </div>
@@ -214,6 +234,34 @@ console.log("LocalStorage ApplicantId:", localStorage.getItem("applicantId"));
                                 title="Fullscreen Resume Preview"
                                 style={{ width: "100%", height: "100%", border: "none" }}
                             />
+                        </div>
+                    </div>
+                )}
+
+                {showPreviewModal && (
+                    <div className="preview-modal-overlay" onClick={closePreviewModal}>
+                        <div className="preview-modal-content">
+                            <div className="preview-modal-header">
+                                <h3>Resume Preview</h3>
+                                <button className="preview-modal-close" onClick={() => setShowPreviewModal(false)}>
+                                    ×
+                                </button>
+                            </div>
+                            <div className="preview-modal-body">
+                                <iframe
+                                    src={`${resumeState.pdfUrl}#toolbar=0&view=FitH`}
+                                    title="Resume Preview Modal"
+                                    style={{ 
+                                        width: "100%", 
+                                        height: "100%", 
+                                        border: "none",
+                                        display: "block",
+                                        margin: "0",
+                                        padding: "0",
+                                        overflow: "hidden"
+                                    }}
+                                />
+                            </div>
                         </div>
                     </div>
                 )}
