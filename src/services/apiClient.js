@@ -29,14 +29,25 @@ const apiClient = axios.create({
 // Request interceptor to add JWT token to headers
 apiClient.interceptors.request.use(
   (config) => {
-    const jwtToken = localStorage.getItem("jwtToken"); 
-    if (jwtToken) {
-      config.headers.Authorization = `Bearer ${jwtToken}`;
+    const requestUrl = config.url || "";
+
+    // Do NOT attach a token to auth endpoints — a stale/expired token in
+    // localStorage would cause the backend to return 401 on a fresh login.
+    const isAuthEndpoint =
+      requestUrl.includes("/applicantLogin") ||
+      requestUrl.includes("/refreshToken");
+
+    if (!isAuthEndpoint) {
+      const jwtToken = localStorage.getItem("jwtToken");
+      if (jwtToken) {
+        config.headers.Authorization = `Bearer ${jwtToken}`;
+      }
     }
     return config;
   },
   (error) => Promise.reject(error)
 );
+
 
 apiClient.interceptors.response.use(
   (response) => response,
@@ -44,19 +55,25 @@ apiClient.interceptors.response.use(
     const { config, response: { status } = {} } = error;
     const originalRequest = config;
 
-    // Fix 3: Prevent infinite loops if the refresh call itself fails with 401
-    if (originalRequest.url.includes('/refreshToken')) {
+    // If there's no config (network-level error), surface the error immediately
+    if (!originalRequest) {
       return Promise.reject(error);
     }
-    if (
-  originalRequest.url.includes("/applicantLogin") ||
-  originalRequest.url.includes("/oauth2") ||
-  originalRequest.url.includes("/refreshToken")
-) {
-  return Promise.reject(error);
-}
 
-   if (status === 401 && !originalRequest._retry) {
+    const requestUrl = originalRequest.url || "";
+
+    // Never attempt a token refresh for auth-related endpoints.
+    // This covers: normal login, google login (both hit /applicantLogin),
+    // and the refresh token endpoint itself (prevent infinite loop).
+    const isAuthEndpoint =
+      requestUrl.includes("/applicantLogin") ||
+      requestUrl.includes("/refreshToken");
+
+    if (isAuthEndpoint) {
+      return Promise.reject(error);
+    }
+
+    if (status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
 
       if (isRefreshing) {
@@ -71,23 +88,26 @@ apiClient.interceptors.response.use(
       isRefreshing = true;
 
       return new Promise((resolve, reject) => {
-        const refreshToken = localStorage.getItem('refreshToken');
+        const refreshToken = localStorage.getItem("refreshToken");
 
-        // Fix 2: Safety check before calling API
         if (!refreshToken) {
           isRefreshing = false;
-          window.location.href = '/candidate';
+          window.location.href = "/candidate";
           return reject(error);
         }
 
-        axios.post(`${apiUrl}/applicant/refreshToken`, { token: refreshToken })
+        axios
+          .post(`${apiUrl}/applicant/refreshToken`, { token: refreshToken })
           .then((response) => {
-            const { jwt: accessToken, refreshToken: newRefreshToken } = response.data.data;
-            localStorage.setItem('jwtToken', accessToken);
-            localStorage.setItem('refreshToken', newRefreshToken);
-            
-            apiClient.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
-            
+            const { jwt: accessToken, refreshToken: newRefreshToken } =
+              response.data.data;
+            localStorage.setItem("jwtToken", accessToken);
+            localStorage.setItem("refreshToken", newRefreshToken);
+
+            apiClient.defaults.headers.common[
+              "Authorization"
+            ] = `Bearer ${accessToken}`;
+
             onRefreshed(accessToken);
             isRefreshing = false;
 
@@ -97,13 +117,14 @@ apiClient.interceptors.response.use(
           .catch((refreshError) => {
             isRefreshing = false;
             refreshSubscribers = [];
-            localStorage.removeItem('jwtToken');
-            localStorage.removeItem('refreshToken');
-            window.location.href = '/candidate';
+            localStorage.removeItem("jwtToken");
+            localStorage.removeItem("refreshToken");
+            window.location.href = "/candidate";
             reject(refreshError);
           });
       });
     }
+
     return Promise.reject(error);
   }
 );

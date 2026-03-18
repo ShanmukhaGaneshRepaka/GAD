@@ -115,6 +115,10 @@ function LoginBody({ handleLogin }) {
     }
     localStorage.setItem("userType", userType1);
 
+    // Write userData so the navbar can display the logged-in user's email.
+    // This overwrites any stale value from a previous session (fixes Edge stale-data bug).
+    localStorage.setItem("userData", JSON.stringify({ identifier: email }));
+
     // Save FCM token (jobseekers only)
     if (userType1 === "jobseeker") {
       try {
