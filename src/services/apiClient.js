@@ -1,6 +1,20 @@
 import axios from "axios";
 import { apiUrl } from "./ApplicantAPIService.js";
 
+
+let isRefreshing = false;
+let refreshSubscribers = [];
+
+const subscribeTokenRefresh = (cb) => {
+  refreshSubscribers.push(cb);
+};
+
+const onRefreshed = (token) => {
+
+  refreshSubscribers.forEach((cb) => cb(token));
+  refreshSubscribers = [];
+};
+
 // Create an Axios instance with default configuration
 const apiClient = axios.create({
   baseURL: apiUrl,
@@ -25,42 +39,72 @@ apiClient.interceptors.request.use(
 );
 
 apiClient.interceptors.response.use(
-  response => response, 
-  async error => {
-    const originalRequest = error.config;
+  (response) => response,
+  (error) => {
+    const { config, response: { status } = {} } = error;
+    const originalRequest = config;
 
-    // Check if the error is due to an unauthorized access 
-    if (error.response.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true;
-      try {
-        const refreshToken = localStorage.getItem('refreshToken'); 
-        console.log('Attempting to refresh token with refresh token:', refreshToken);
-        // Make a request to your auth server to refresh the token.
-        const response = await axios.post(`${apiUrl}/applicant/refreshToken`, {
-          token: refreshToken,
-        });
-        const { jwt:accessToken, refreshToken: newRefreshToken } = response.data.data;
-
-
-        // Store the new access and refresh tokens.
-        localStorage.setItem('jwtToken', accessToken);
-        localStorage.setItem('refreshToken', newRefreshToken);
-
-        // Update the authorization header with the new access token.
-        apiClient.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
-        return apiClient(originalRequest); 
-        
-      } catch (refreshError) {
-        // Handle refresh token errors by clearing stored tokens and redirecting to the login page.
-        console.error('Token refresh failed:', refreshError);
-        localStorage.removeItem('jwtToken');
-        localStorage.removeItem('refreshToken');
-        window.location.href = '/candidate'; 
-        return Promise.reject(refreshError);
-      }
+    // Fix 3: Prevent infinite loops if the refresh call itself fails with 401
+    if (originalRequest.url.includes('/refreshToken')) {
+      return Promise.reject(error);
     }
-    return Promise.reject(error); 
+    if (
+  originalRequest.url.includes("/applicantLogin") ||
+  originalRequest.url.includes("/oauth2") ||
+  originalRequest.url.includes("/refreshToken")
+) {
+  return Promise.reject(error);
+}
+
+   if (status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+
+      if (isRefreshing) {
+        return new Promise((resolve) => {
+          subscribeTokenRefresh((token) => {
+            originalRequest.headers.Authorization = `Bearer ${token}`;
+            resolve(apiClient(originalRequest));
+          });
+        });
+      }
+
+      isRefreshing = true;
+
+      return new Promise((resolve, reject) => {
+        const refreshToken = localStorage.getItem('refreshToken');
+
+        // Fix 2: Safety check before calling API
+        if (!refreshToken) {
+          isRefreshing = false;
+          window.location.href = '/candidate';
+          return reject(error);
+        }
+
+        axios.post(`${apiUrl}/applicant/refreshToken`, { token: refreshToken })
+          .then((response) => {
+            const { jwt: accessToken, refreshToken: newRefreshToken } = response.data.data;
+            localStorage.setItem('jwtToken', accessToken);
+            localStorage.setItem('refreshToken', newRefreshToken);
+            
+            apiClient.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+            
+            onRefreshed(accessToken);
+            isRefreshing = false;
+
+            originalRequest.headers.Authorization = `Bearer ${accessToken}`;
+            resolve(apiClient(originalRequest));
+          })
+          .catch((refreshError) => {
+            isRefreshing = false;
+            refreshSubscribers = [];
+            localStorage.removeItem('jwtToken');
+            localStorage.removeItem('refreshToken');
+            window.location.href = '/candidate';
+            reject(refreshError);
+          });
+      });
+    }
+    return Promise.reject(error);
   }
 );
-
 export default apiClient;

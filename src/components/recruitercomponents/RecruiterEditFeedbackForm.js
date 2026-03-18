@@ -45,7 +45,7 @@ function RecruiterEditFeedbackForm() {
     console.log('formId from useParams:', formId);
     console.log('user from context:', user);
     console.log('user.id:', user?.id);
-    console.log('API URL would be:', `${apiUrl}/api/feedback-forms/recruiter/${user?.id}/getFeedBackFormById/${formId}`);
+    
     
     if (formId && user?.id) {
       console.log('Conditions met - calling fetchFormDetails');

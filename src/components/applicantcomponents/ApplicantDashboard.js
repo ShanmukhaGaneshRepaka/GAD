@@ -305,7 +305,7 @@ const ApplicantDashboard = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const profileIdResponse = await apiClient.get(
+        const response = await apiClient.get(
           `/applicantprofile/${userId}/profileid`,
         );
         setProfileData(response.data);
